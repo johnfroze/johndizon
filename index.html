@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>John Froze — Full-Stack Developer</title>
+<title>John Robert Dizon — Full-Stack Developer</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
 <style>
 :root {
@@ -557,7 +557,7 @@ footer {
 
 <!-- NAV -->
 <nav>
-  <div class="nav-logo">JF.DEV</div>
+  <div class="nav-logo">JRD.DEV</div>
   <div class="nav-links">
     <a href="#about">About</a>
     <a href="#skills">Skills</a>
@@ -570,7 +570,7 @@ footer {
 <!-- HERO -->
 <div class="hero">
   <div class="hero-tag">FULL-STACK DEVELOPER · PHILIPPINES</div>
-  <h1 class="hero-name">John<br/><span>Froze.</span></h1>
+  <h1 class="hero-name">John Robert<br/><span>Dizon.</span></h1>
   <div class="hero-title">Self-Taught Developer building production systems</div>
   <p class="hero-desc">
     I design and build complete web applications from scratch — real-time data pipelines, role-based auth systems, business logic engines — without frameworks or libraries getting in the way.
@@ -751,13 +751,13 @@ footer {
 
     <div class="resume-header">
       <div>
-        <div class="resume-name">John Froze</div>
+        <div class="resume-name">John Robert Dizon</div>
         <div class="resume-pos">Full-Stack Web Developer</div>
       </div>
       <div class="resume-contact">
         <div>Floridablanca, Pampanga, Philippines</div>
-        <div>johnfroze@gmail.com</div>
-        <div>github.com/johnfroze</div>
+        <div>johnrobertdizon@gmail.com</div>
+        <div>github.com/johnrobertdizon</div>
       </div>
     </div>
 
@@ -845,13 +845,13 @@ footer {
         I'm open to freelance projects, full-time opportunities, and collaborations. If you have a system that needs to be built right — not just built fast — let's talk.
       </p>
       <div class="contact-links">
-        <a href="mailto:johnfroze@gmail.com" class="contact-link">
+        <a href="mailto:johnrobertdizon@gmail.com" class="contact-link">
           <span class="contact-link-icon">✉</span>
-          johnfroze@gmail.com
+          johnrobertdizon@gmail.com
         </a>
-        <a href="https://github.com/johnfroze" target="_blank" class="contact-link">
+        <a href="https://github.com/johnrobertdizon" target="_blank" class="contact-link">
           <span class="contact-link-icon">⌥</span>
-          github.com/johnfroze
+          github.com/johnrobertdizon
         </a>
         <a href="#" class="contact-link">
           <span class="contact-link-icon">📍</span>
@@ -860,21 +860,59 @@ footer {
       </div>
     </div>
     <div>
-      <div class="contact-form">
-        <input class="form-input" type="text" placeholder="Your name"/>
-        <input class="form-input" type="email" placeholder="Your email"/>
-        <textarea class="form-textarea" placeholder="Tell me about your project..."></textarea>
-        <button class="btn-primary" onclick="https://formspree.io/f/mbglwbro">Send Message</button>
-      </div>
+      <form class="contact-form" id="contactForm" action="https://formspree.io/f/mbglwbro" method="POST">
+        <input class="form-input" type="text" name="name" placeholder="Your name" required/>
+        <input class="form-input" type="email" name="email" placeholder="Your email" required/>
+        <textarea class="form-textarea" name="message" placeholder="Tell me about your project..." required></textarea>
+        <button class="btn-primary" type="submit" id="submitBtn">Send Message</button>
+        <div id="formMsg" style="font-family:var(--mono);font-size:13px;display:none;padding:10px 0;"></div>
+      </form>
     </div>
   </div>
 </section>
 
 <footer>
-  <span>Built by John Froze · 2026 · Vanilla JS · No frameworks</span>
+  <span>Built by John Robert Dizon · 2026 · Vanilla JS · No frameworks</span>
 </footer>
 
 <script>
+// Formspree AJAX submission
+const form = document.getElementById('contactForm');
+const submitBtn = document.getElementById('submitBtn');
+const formMsg = document.getElementById('formMsg');
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  submitBtn.textContent = 'Sending...';
+  submitBtn.style.opacity = '0.7';
+  submitBtn.disabled = true;
+
+  try {
+    const res = await fetch('https://formspree.io/f/mbglwbro', {
+      method: 'POST',
+      body: new FormData(form),
+      headers: { 'Accept': 'application/json' }
+    });
+
+    if (res.ok) {
+      form.reset();
+      formMsg.style.display = 'block';
+      formMsg.style.color = 'var(--green)';
+      formMsg.textContent = '✅ Message sent! I\'ll get back to you soon.';
+      submitBtn.textContent = 'Sent!';
+    } else {
+      throw new Error('Failed');
+    }
+  } catch {
+    formMsg.style.display = 'block';
+    formMsg.style.color = '#ff6b5b';
+    formMsg.textContent = '❌ Something went wrong. Please email me directly.';
+    submitBtn.textContent = 'Send Message';
+    submitBtn.style.opacity = '1';
+    submitBtn.disabled = false;
+  }
+});
+
 // Smooth active nav highlight
 const sections = document.querySelectorAll('section[id]');
 const navLinks = document.querySelectorAll('.nav-links a');
